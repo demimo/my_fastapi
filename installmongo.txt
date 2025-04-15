@@ -1,0 +1,84 @@
+sudo apt-get install gnupg curl
+
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
+   --dearmor
+
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org
+
+sudo systemctl start mongod
+
+sudo systemctl status mongod
+
+-------------------------------------------
+==MONGO
+
+=Отредактируйте конфиг MongoDB:
+sudo nano /etc/mongod.conf
+
+=Измените секцию net (или добавьте её):
+net:
+  port: 27017
+  bindIp: 0.0.0.0  # Разрешает подключения со всех IP (или укажите конкретный IP)
+
+=Перезапустите MongoDB:
+sudo systemctl restart mongod
+
+=Важно! Настройте фаервол (если используется):
+sudo ufw allow 27017
+
+=Подключитесь к MongoDB Shell
+mongosh
+
+=Переключитесь на базу admin
+use admin
+
+=Создайте пользователя
+db.createUser({
+  user: "admin",
+  pwd: "12345",
+  roles: ["root"]
+})
+
+=Проверьте пользователя
+db.getUsers()
+Или проверьте аутентификацию:
+db.auth("remoteUser", "securePassword")
+// Должно вернуть `1` (успех)
+
+=Включите аутентификацию в конфиге
+sudo nano /etc/mongod.conf
+
+=Добавьте (или раскомментируйте):
+security:
+  authorization: enabled
+=Сохраните (Ctrl+X, затем Y, Enter) и перезапустите MongoDB:
+sudo systemctl restart mongod
+
+=======================
+
+Подключитесь к MongoDB с аутентификацией:
+mongosh -u admin -p 12345 --authenticationDatabase admin
+
+Показать все базы данных:
+show dbs
+
+Переключиться на конкретную базу:
+use your_database_name
+
+Показать коллекции в текущей базе:
+show collections
+
+Просмотреть данные в коллекции:
+// Все документы (ограничьте выборку для больших коллекций!)
+db.your_collection_name.find().limit(10)
+
+// С красивым форматированием
+db.your_collection_name.find().pretty()
+
+// Подсчёт документов
+db.your_collection_name.countDocuments()

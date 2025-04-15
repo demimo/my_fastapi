@@ -1,0 +1,110 @@
+{
+    '_id': ObjectId('67f019d3038f91377010419a'),
+    "user_id": "",
+    "name": "",
+    "email": "",
+    "hashed_password": "",
+    "role": "",
+    "group": "",
+    
+
+}
+
+Коллекция users
+{
+  _id: ObjectId("..."), // Уникальный ID пользователя
+  name: "Иван Иванов",
+  email: "user@example.com",
+  password_hash: "...", // Хеш пароля (не храните пароли в открытом виде!)
+  role: "admin", // admin, manager, customer, etc.
+  status: "active", // active, suspended, deleted
+  created_at: ISODate("..."),
+  last_login: ISODate("..."),
+  profile: {
+    phone: "+79991234567",
+    avatar: "/uploads/avatars/user123.jpg",
+    timezone: "Europe/Moscow"
+  },
+  // Если пользователь привязан к компании
+  company_id: ObjectId("..."), // Ссылка на компанию
+  position: "Менеджер по продажам"
+}
+
+Коллекция companies
+{
+  _id: ObjectId("..."),
+  name: "ООО Ромашка",
+  legal_name: "Общество с ограниченной ответственностью 'Ромашка'",
+  tax_id: "1234567890", // ИНН
+  created_at: ISODate("..."),
+  updated_at: ISODate("..."),
+  address: {
+    country: "Россия",
+    city: "Москва",
+    postal_code: "123456",
+    street: "ул. Ленина, д. 1"
+  },
+  contacts: [
+    {
+      type: "phone",
+      value: "+79991234567",
+      description: "Основной телефон"
+    },
+    {
+      type: "email",
+      value: "info@romashka.ru",
+      description: "Общая почта"
+    }
+  ]
+}
+
+Коллекция partnerships
+{
+  _id: ObjectId("..."),
+  company_a: ObjectId("..."), // ID первой компании
+  company_b: ObjectId("..."), // ID второй компании
+  status: ""
+}
+
+Коллекция tickets
+{
+  _id: ObjectId("..."),
+  ticket_number: "TKT-1001",
+  subject: "Проблема с доступом",
+  description: "Подробное описание проблемы...", // Добавил
+  status: "open",
+  priority: "medium",
+  creator_company_id: ObjectId("..."), // Компания создателя
+  creator_user_id: ObjectId("..."), // Пользователь создатель
+  assigned_company_id: ObjectId("..."), // Назначенная компания
+  assigned_user_id: ObjectId("..."), // Назначенный пользователь
+  participants: [
+    {
+      user_id: ObjectId("..."),
+      company_id: ObjectId("..."),
+      role: "observer" // observer, contributor
+    }
+  ],
+  created_at: ISODate("..."),
+  updated_at: ISODate("..."),
+  closed_at: ISODate("..."),
+  time_estimate: 120, // Планируемое время в минутах
+  time_spent: 90, // Фактическое время в минутах
+  tags: ["access", "urgent"]
+}
+
+Коллекция messages
+{
+  _id: ObjectId("..."),
+  ticket_id: ObjectId("..."), // ссылка на тикет
+  sender_id: ObjectId("..."),
+  content: "Здравствуйте, у меня проблема...",
+  timestamp: ISODate("..."),
+  read_by: [ObjectId("...")], // кто прочитал
+  attachments: [
+    {
+      url: "/uploads/file1.pdf",
+      name: "Документ.pdf"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+==================================================================
+== REDIS
+==================================================================
+-- Проникновение в конетйнер
+docker exec -it my_fastapi-redis_auth_1-1 bash
+
+redis-cli
+
+-- Ввод секретного ключа
+AUTH 12345
+
+-- Просмотр всех ключей
+KEYS *
+
+-- Получение значения по ключу
+HGETALL "sessions:67f15ecd5589487dc1b52d92:b9731c92-24ce-4a80-b3c1-6942be11f9ef"
+
+-- Автоматическое удаление истекших ключей 1 раз в секунду
+CONFIG SET hz 1
+
+-- Полная очистка Redis
+FLUSHALL ASYNC
+FLUSHALL — удаляет все ключи из всех баз данных в Redis.
+FLUSHDB — удаляет только ключи из текущей выбранной базы данных.
+
+
+http://localhost/updateuser
+
+{
+    "id": 1,
+    "user_name": "qwe",
+    "email": "qwe1",
+    "password": "qwe",
+    "is_admin": false,
+    "is_active": false
+}
+
+http://localhost/login
+{
+    "email": "qwe1",
+    "password": "qwe"
+}
+
+==================================================================
+КАСАНДРА
+==================================================================
+Проверка работоспособности
+docker exec -it appeal_node1 nodetool status
+
+
+Подключаемся к Cassandra вручную
+docker exec -it appeal_node1 cqlsh
+
+Выполняем запрос на получение всех ключевых пространств
+DESCRIBE KEYSPACES;
+
+Если ключевое пространство отсутствует, создаём его
+CREATE KEYSPACE appealkeyspace WITH replication = {
+   'class': 'NetworkTopologyStrategy',
+   'replication_factor': 2
+};

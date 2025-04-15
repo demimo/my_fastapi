@@ -1,0 +1,7 @@
+fastapi[standard]
+bcrypt
+asyncpg
+redis
+PyJWT
+python-dotenv
+motor
