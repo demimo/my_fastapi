@@ -69,28 +69,29 @@
 Коллекция tickets
 {
   _id: ObjectId("..."),
-  ticket_number: "TKT-1001",
   subject: "Проблема с доступом",
   description: "Подробное описание проблемы...", // Добавил
   status: "open",
   priority: "medium",
   creator_company_id: ObjectId("..."), // Компания создателя
   creator_user_id: ObjectId("..."), // Пользователь создатель
-  assigned_company_id: ObjectId("..."), // Назначенная компания
-  assigned_user_id: ObjectId("..."), // Назначенный пользователь
-  participants: [
-    {
-      user_id: ObjectId("..."),
-      company_id: ObjectId("..."),
-      role: "observer" // observer, contributor
-    }
-  ],
+  responsible_company_id: ObjectId("..."), // Назначенная компания
+  responsible_user_id: ObjectId("..."), // Назначенный пользователь
+  participants: {
+    
+    // Сколько угодно пользователей и компаний
+    user_id: ObjectId("..."),
+    user_id: ObjectId("..."),
+    company_id: ObjectId("..."),
+    company_id: ObjectId("..."),
+    company_id: ObjectId("..."),
+    ...
+    
+  },
   created_at: ISODate("..."),
   updated_at: ISODate("..."),
   closed_at: ISODate("..."),
-  time_estimate: 120, // Планируемое время в минутах
   time_spent: 90, // Фактическое время в минутах
-  tags: ["access", "urgent"]
 }
 
 Коллекция messages
