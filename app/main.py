@@ -18,6 +18,8 @@ from app.partnerships.GetAll import GetAll as GetAllPartners
 
 
 from app.appeal.Create import Create as CreateAppeal
+from app.appeal.GetAll import GetAll as GetAllAppeal
+
 
 app = FastAPI()
 
@@ -96,13 +98,17 @@ async def rec(request: Request):
 
 
 
-@app.post("/createappeal")
+@app.post("/appeal/create")
 async def rec(request: Request):
     auth = await Check.check(request)
     data = await CreateAppeal.create(request, auth)
     return data
 
-
+@app.get("/appeal/get/all")
+async def rec(request: Request):
+    auth = await Check.check(request)
+    data = await GetAllAppeal.get_all(auth)
+    return data
 
 
 

@@ -70,7 +70,6 @@
 {
   _id: ObjectId("..."),
   subject: "Проблема с доступом",
-  description: "Подробное описание проблемы...", // Добавил
   status: "open",
   priority: "medium",
   creator_company_id: ObjectId("..."), // Компания создателя

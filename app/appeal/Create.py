@@ -35,8 +35,7 @@ class Create:
             raise HTTPException(400, "Поле priority обязательно")
         if not target_responsible_company_id:
             raise HTTPException(400, "Поле responsible_company_id обязательно")
-        
-        
+
         try:
 
             # Подключение к базе
@@ -55,6 +54,7 @@ class Create:
                 "creator_company_id": current_company_id,
                 "creator_user_id": current_user_id,
                 "responsible_company_id": target_responsible_company_id,
+                "responsible_user_id": "",
                 "participants": participants,
                 "created_at": datetime.datetime.now(),
                 "updated_at": datetime.datetime.now()
