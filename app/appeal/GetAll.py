@@ -20,10 +20,12 @@ class GetAll:
 
             # Ищем все активные обращения, где текущая компания является ответственной
             appeal_cursor = appeals_collection.find({
-                "responsible_company_id": current_company_id, 
-                "status": {"$ne": "Закрыто"}  # Исправлен синтаксис условия
+                "$or": [
+                    {"responsible_company_id": current_company_id, "status": {"$ne": "Закрыто"}},
+                    {"creator_company_id": current_company_id, "status": {"$ne": "Закрыто"}}
+                ]
             })
-            
+
             appeals = await appeal_cursor.to_list(length=None)
 
             if not appeals:
@@ -50,7 +52,7 @@ class GetAll:
                         "creator_user_id": str(appeal.get("creator_user_id", "")),
                         "responsible_company_id": str(appeal.get("responsible_company_id", "")),
                         "responsible_user_id": str(appeal.get("responsible_user_id", "")),
-                        "participants": participants,  # Исправленная структура participants
+                        "participants": participants,
                         "created_at": appeal.get("created_at", ""),
                         "updated_at": appeal.get("updated_at", ""),  
                     }

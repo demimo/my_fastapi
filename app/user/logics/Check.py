@@ -1,4 +1,5 @@
 from fastapi import Request, HTTPException
+from fastapi.responses import JSONResponse
 import datetime
 from datetime import timezone
 
@@ -16,7 +17,12 @@ class Check:
         # Получаем JWT из cookies
         jwt_token = request.cookies.get("sessionid")
         if not jwt_token:
-            raise HTTPException(status_code=401, detail="Токена нет необходимо авторизоваться")
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "Требуется авторизация"},
+                headers={'Access-Control-Allow-Credentials': 'true'}
+            )
+            # raise HTTPException(status_code=401, detail="Токена нет необходимо авторизоваться")
 
         # Получаем информацию из JWT
         payload = await CrudJwt.decode_token(jwt_token)

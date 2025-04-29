@@ -66,7 +66,7 @@ class UpdateUser:
                 if current_is_active != target_is_active:
                     raise HTTPException(403, "Вы не можете себя деактивировать")
                 
-            # Редактирование дургих профилей
+            # Редактирование других профилей
             if current_user_id != target_id:
 
                 if check_target_user["role"] == 'Владелец':

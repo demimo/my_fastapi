@@ -53,7 +53,9 @@ class Sender:
             
             if existing_partnership:
                 if existing_partnership["status"] == "Неактивно":
-                    raise HTTPException(400, "Ваша заявка уже отправлена")
+                    await partnerships_collection.delete_one({"_id": existing_partnership["_id"]})
+                    return {"msg": "Отправленная заявка удалена"}
+                    # raise HTTPException(400, "Ваша заявка уже отправлена")
                 elif existing_partnership["status"] == "Активно":
                     raise HTTPException(400, "Вы уже партнеры")
                 else:

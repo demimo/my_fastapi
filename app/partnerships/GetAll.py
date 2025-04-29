@@ -7,7 +7,7 @@ from app.config.Config import ConnMongo
 class GetAll:
 
     @staticmethod
-    async def get_all(auth: Dict[str, Any]) -> Dict[str, Any]:
+    async def get_all(auth):
         # Получаем данные из JWT
         current_company_id = auth["company_id"]
 

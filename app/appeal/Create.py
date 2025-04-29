@@ -22,7 +22,7 @@ class Create:
         target_priority = data.get("priority")
         target_responsible_company_id = data.get("responsible_company_id")
 
-        # Обрабатываем участников (исправлено на target_participants)
+        # Обрабатываем участников
         participants = {
             "company_id": data.get("target_participants", {}).get("company_id", []),
             "user_id": data.get("target_participants", {}).get("user_id", [])
